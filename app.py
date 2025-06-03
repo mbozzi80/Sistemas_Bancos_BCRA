@@ -6,7 +6,7 @@ from BCRA_.tabs import tab_resumen, tab_prestamos, tab_titulos, tab_depositos, t
 @st.cache_data
 def load_data():
     """Descarga y carga el archivo h_imput.txt desde Dropbox"""
-    url = "https://www.dropbox.com/scl/fi/xhbjjclp7sn33ak48nge5/h_imput.txt?rlkey=h3dfmnt9skshzdekrarvetnj1&st=ft0127ge&dl=1"
+    url = "https://www.dropbox.com/scl/fi/wfhz0w5cybmwlgi8u9lch/h_imput_resumido.txt?rlkey=4tbgq9v9q6kntpr1b75u7zuat&dl=1"
     
     try:
         response = requests.get(url)
@@ -25,7 +25,7 @@ st.set_page_config(
 
 # Título principal
 st.title("🏦 Sistema Bancario Argentino - BCRA")
-st.markdown("**La primera plataforma web de análisis bancario argentino con 20 años de datos**")
+st.markdown("**La primera plataforma web de análisis bancario argentino con 10 años de datos**")
 
 # Cargar datos una sola vez
 with st.spinner("Cargando datos del BCRA..."):
