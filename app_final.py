@@ -28,7 +28,7 @@ st.set_page_config(
 
 # Título principal
 st.title("🏦 Sistema Bancario Argentino - BCRA")
-st.markdown("**La primera plataforma web de análisis bancario argentino con 10 años de datos**")
+st.markdown("**La primera plataforma web de análisis bancario argentino con 20 años de datos**")
 
 # Cargar datos PRE-PROCESADOS (súper rápido)
 with st.spinner("Cargando datos procesados..."):
@@ -70,4 +70,3 @@ if df is not None:
 else:
     st.error("❌ No se pudieron cargar los datos")
 
-    

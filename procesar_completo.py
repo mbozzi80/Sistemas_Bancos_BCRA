@@ -5,10 +5,10 @@ def crear_archivo_final():
     """
     Procesa LOCALMENTE y crea archivo final con denominaciones incluidas
     """
-    print("🔄 Leyendo h_imput_resumido local...")
+    print("🔄 Leyendo h_imput local...")
     
     # Leer archivo local directamente
-    nombre_archivo = "h_imput_resumido.txt"
+    nombre_archivo = "h_imput.txt"
     
     try:
         with open(nombre_archivo, 'r', encoding='latin-1') as file:
@@ -26,6 +26,14 @@ def crear_archivo_final():
             print(f"📊 Columnas: {len(df_final.columns)} columnas")
             print(f"🏦 Bancos únicos: {df_final['Entidad'].nunique()}")
             
+            # APLICAR FILTRO PARA OPTIMIZAR
+            print("🔄 Aplicando filtro de bancos...")
+            
+            # FILTRO: Solo bancos < 10000
+            df_final = df_final[df_final['Entidad'] < 10000]
+            print(f"🏦 Después filtro bancos < 10000: {len(df_final)} registros")
+            print(f"🏦 Bancos finales: {df_final['Entidad'].nunique()}")
+
             # Guardar archivo final PRE-PROCESADO
             archivo_final = "bcra_datos_finales.csv"
             df_final.to_csv(archivo_final, index=False, encoding='utf-8')
