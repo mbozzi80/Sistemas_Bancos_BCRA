@@ -34,15 +34,35 @@ def crear_archivo_final():
             print(f"🏦 Después filtro bancos < 10000: {len(df_final)} registros")
             print(f"🏦 Bancos finales: {df_final['Entidad'].nunique()}")
 
-            # Guardar archivo final PRE-PROCESADO
+            # CONVERTIR COLUMNAS MONETARIAS A FLOAT
+            print("🔄 Convirtiendo columnas monetarias a float...")
+            columnas_monetarias = [col for col in df_final.columns 
+                                 if col not in ['Entidad', 'Nombre_Banco', 'Periodo']]
+            
+            for col in columnas_monetarias:
+                df_final[col] = pd.to_numeric(df_final[col], errors='coerce').fillna(0).astype(float)
+            
+            print(f"✅ {len(columnas_monetarias)} columnas convertidas a float")
+
+            # Verificando columnas antes de guardar:
+            print("🔍 Verificando columnas antes de guardar...")
+
+            if 'Volumen de Negocio' in df_final.columns:
+                print("✅ 'Volumen de Negocio' presente")
+                print(f"📊 Muestra: {df_final['Volumen de Negocio'].head()}")
+                print(f"📊 Stats: Min={df_final['Volumen de Negocio'].min():,.0f}, Max={df_final['Volumen de Negocio'].max():,.0f}")
+            else:
+                print("❌ 'Volumen de Negocio' FALTANTE")
+
+            # Guardar archivo final PRE-PROCESADO (eliminar duplicado)
             archivo_final = "bcra_datos_finales.csv"
             df_final.to_csv(archivo_final, index=False, encoding='utf-8')
             
             print(f"💾 Archivo final guardado: {archivo_final}")
-            print("📤 AHORA SUBE ESTE ARCHIVO A DROPBOX")
-            print("🎯 Después modificaremos app.py para usar este archivo")
-            
+            print("📤 AHORA SUBE ESTE ARCHIVO A GITHUB")
+                        
             return df_final
+        
         else:
             print("❌ Error en procesamiento")
             return None
@@ -56,6 +76,9 @@ if __name__ == "__main__":
     df_result = crear_archivo_final()
     
     if df_result is not None:
-        print("✅ ÉXITO: Archivo listo para subir a Dropbox")
+        print("✅ ÉXITO: Archivo listo para subir al Repo en GitHub")
     else:
         print("❌ Error en el proceso")
+
+
+

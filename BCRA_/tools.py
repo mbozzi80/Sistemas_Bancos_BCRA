@@ -5,13 +5,13 @@ from .estructura_bcra import dic, cl, columnas
 
 def cargar_denominaciones():
     """
-    Carga los archivos de denominaciones de bancos y cuentas desde Dropbox
+    Carga los archivos de denominaciones de bancos y cuentas desde GitHub
     """
     try:
         print("🔄 Descargando denominaciones de bancos...")
         
-        # URL del archivo de denominaciones de bancos
-        url_bancos = "https://www.dropbox.com/scl/fi/88ji9q1oo2hn7xkepv11w/denominacion_.TXT?rlkey=qvuicqqdq1yhv1vecffor14mt&st=dtqyxrsd&dl=1"
+        # URL del archivo de denominaciones de bancos desde GitHub
+        url_bancos = "https://raw.githubusercontent.com/mbozzi80/Sistemas_Bancos_BCRA/master/denominacion_.TXT"
         
         # Descargar denominaciones de bancos
         response_bancos = requests.get(url_bancos)
@@ -19,7 +19,7 @@ def cargar_denominaciones():
         print(f"✅ Descarga de bancos exitosa. Tamaño: {len(response_bancos.text)} caracteres")
         
         # Mostrar primeras líneas para debug
-        primeras_lineas = response_bancos.text[:200]
+        primeras_lineas = response_bancos.text[:10]
         print(f"📄 Primeras líneas del archivo de bancos: {primeras_lineas}")
         
         # El archivo está en formato CSV con comillas, usar delimitador tab
@@ -44,8 +44,8 @@ def cargar_denominaciones():
         if len(dict_bancos) > 0:
             print(f"🔍 Primeros bancos: {list(dict_bancos.items())[:3]}")
         
-        # URL del archivo de denominaciones de cuentas
-        url_cuentas = "https://www.dropbox.com/scl/fi/oli6jpf36x5za24m0hsve/cuentas.txt?rlkey=km1cj9j5lppqz8q1q3n4tk54x&st=mlmswpo7&dl=1"
+        # URL del archivo de denominaciones de cuentas desde GitHub
+        url_cuentas = "https://raw.githubusercontent.com/mbozzi80/Sistemas_Bancos_BCRA/master/cuentas.txt"
         
         # Descargar denominaciones de cuentas
         response_cuentas = requests.get(url_cuentas)
@@ -69,6 +69,7 @@ def cargar_denominaciones():
     except Exception as e:
         print(f"❌ Error al cargar denominaciones: {e}")
         return {}, {}
+    
 
 def procesar_datos_bcra(texto_crudo):
     """

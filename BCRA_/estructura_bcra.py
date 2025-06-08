@@ -64,7 +64,12 @@ dic = {
     "PN FINAL": (400000,699999), 
     "Ingresos financieros": (510000,519999), "Egresos financieros": (520000,529999), "Cargo por Incobrabilidad": (530000,539999),
     "Ingresos por servicios": (540000,549999), "Egresos por servicios": (550000,559999), "Gastos de Administracion": (560000,569999), "Gastos de Personal": (560000,560027), "Utilidades diversas": (570000,579999),
-    "Perdidas diversas": (580000,589999), "Utilidad neta": (500000,649999)
+    "Perdidas diversas": (580000,589999), "Utilidad neta": (500000,649999),
+    
+    "Volumen de Negocio": "CALCULADO",
+    "Depositos VN": [(311100, 311199), (311400, 311499), (311700, 311799), (312100, 312199), (315100, 315199), (315700, 315799)],
+    "Prestamos VN Rangos": [(131100, 131199), (131400, 131499), (131700, 131799), (135700, 135799)],
+    "Prestamos VN Puntuales": [131263, 131851, 131855, 131859, 131889, 131890]
 }
 
 # Diccionario para recorrer, y True o False según haya que multiplicar *-1
@@ -127,12 +132,13 @@ cl = {
     "Cargo por Incobrabilidad": True, "Ingresos por servicios": False, 
     "Egresos por servicios": True, "Gastos de Administracion": True, 
     "Gastos de Personal": True, "Utilidades diversas": False, 
-    "Perdidas diversas": True, "Utilidad neta": False 
+    "Perdidas diversas": True, "Utilidad neta": False,
+    "Volumen de Negocio": True 
 }
 
-# Ord de columnas para el DataFraUSD final
+# Ord de columnas para el DataFra final
 columnas = [
-    "Entidad", "Periodo", 
+    "Entidad", "Periodo", "Nombre_Banco", "Volumen de Negocio",
     
     # ACTIVOS
     "Activo",
@@ -224,7 +230,7 @@ ratios_definiciones = {
     "I30": "Gastos de Administracion / Ingresos financieros",  # Ratio eficicia
     "I31": "Prestamos SPARS / Prestamos totales",  # Expo sector público
     "I32": "Prestamos SPNF ARS / Prestamos totales",  # Expo sector privado
-    "I33": "Prestamos CoUSDrciales / Prestamos totales",  # Préstamos coUSDrciales
+    "I33": "Prestamos Comerciales / Prestamos totales",  # Préstamos comerciales
     "I34": "Capital social / Activo",  # Capital sobre activo
     "I35": "Depositos a plazo ARS / Depositos  ARS",  # Estructura depósitos ARS
     "I36": "Depositos a plazo USD / Depositos  USD",  # Estructura depósitos USD
@@ -239,7 +245,7 @@ ratios_definiciones = {
 
 # Descripciones de los ratios para la aplicación web
 ratios_descripciones = {
-    "I1": "Liquidez InUSDdiata - Disponibilidades sobre Activo Total",
+    "I1": "Liquidez Inmediata - Disponibilidades sobre Activo Total",
     "I2": "Participación Préstamos - Préstamos sobre Activo Total", 
     "I3": "Participación Títulos - Títulos sobre Activo Total",
     "I4": "Activos Fijos - PPE sobre Activo Total",
@@ -256,7 +262,7 @@ ratios_descripciones = {
     "I17": "Liquidez Básica - Disponibilidades sobre Depósitos",
     "I18": "Liquidez Ampliada - Disponibilidades sobre (Depósitos + OOIF)",
     "I19": "Activos Líquidos - (Disponibilidades + Títulos) sobre Activo",
-    "I20": "InterUSDdiación - Activos Productivos sobre Fondeo Total",
+    "I20": "Intermediación - Activos Productivos sobre Fondeo Total",
     "I21": "Costo Administrativo - Gastos Admin sobre Depósitos",
     "I22": "Eficicia Personal - Gastos Personal sobre Gastos Admin",
     "I24": "Eficicia Operativa - Gastos Admin sobre Total Gastos",
@@ -265,7 +271,7 @@ ratios_descripciones = {
     "I30": "Ratio Eficicia - Gastos Admin sobre Ingresos Financieros",
     "I31": "Exposición Sector Público - Préstamos Públicos sobre Total",
     "I32": "Exposición Sector Privado - Préstamos Privados sobre Total",
-    "I33": "Préstamos CoUSDrciales - CoUSDrciales sobre Total Préstamos",
+    "I33": "Préstamos Comerciales - Comerciales sobre Total Préstamos",
     "I34": "Capital sobre Activo - Capital Social sobre Activo",
     "I35": "Estructura Dep ARS - Dep Plazo ARS sobre Dep ARS",
     "I36": "Estructura Dep USD - Dep Plazo USD sobre Dep USD",

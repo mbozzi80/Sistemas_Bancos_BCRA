@@ -74,7 +74,7 @@ def crear_archivo_final_constante():
             # CONVERTIR SOLO COLUMNAS MONETARIAS A NUMÉRICO ANTES DEL AJUSTE
             print("🔄 Convirtiendo columnas monetarias a formato numérico...")
             for col in columnas_monetarias:
-                df_final[col] = pd.to_numeric(df_final[col], errors='coerce').fillna(0)
+                df_final[col] = pd.to_numeric(df_final[col], errors='coerce').fillna(0).astype(float)  # ← Agregar .astype(float)
 
             print(f"✅ {len(columnas_monetarias)} columnas convertidas a numérico")
             print(f"🛡️ Columnas protegidas: {columnas_no_modificar}")
@@ -93,10 +93,20 @@ def crear_archivo_final_constante():
                     
                     # Aplicar factor de ajuste SOLO a columnas monetarias
                     for col in columnas_monetarias:
-                        df_final.at[idx, col] = row[col] * factor_ajuste
+                        df_final.at[idx, col] = float(row[col]) * factor_ajuste
 
             print(f"✅ Ajuste por inflación completado")
             print(f"📈 Factor promedio aplicado: {ipc_ultimo/df_ipc['IPC'].mean():.2f}")
+
+            # Antes de guardar (línea ~100):
+            print("🔍 Verificando columnas antes de guardar archivo constante...")
+            print(f"Columnas en DataFrame: {df_final.columns.tolist()}")
+
+            if 'Volumen de Negocio' in df_final.columns:
+                print("✅ 'Volumen de Negocio' presente en datos constantes")
+                print(f"📊 Muestra: {df_final['Volumen de Negocio'].head()}")
+            else:
+                print("❌ 'Volumen de Negocio' FALTANTE en datos constantes")
 
             # 5. GUARDAR ARCHIVO FINAL AJUSTADO POR INFLACIÓN
             archivo_final = f"bcra_datos_constantes_{ultimo_periodo_bcra}.csv"
