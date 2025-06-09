@@ -31,7 +31,12 @@ def load_historical_data():
     url = "https://raw.githubusercontent.com/mbozzi80/Sistemas_Bancos_BCRA/master/bcra_datos_finales.csv"
     
     try:
-        response = requests.get(url)
+        # AGREGAR ESTAS 4 LÍNEAS NUEVAS:
+        headers = {}
+        if 'GITHUB_TOKEN' in st.secrets:
+            headers = {"Authorization": f"token {st.secrets['GITHUB_TOKEN']}"}
+        
+        response = requests.get(url, headers=headers)  # ← AGREGAR headers aquí
         response.raise_for_status()
         df = pd.read_csv(StringIO(response.text))
         return df
@@ -47,7 +52,12 @@ def load_constant_data():
     url = f"https://raw.githubusercontent.com/mbozzi80/Sistemas_Bancos_BCRA/master/bcra_datos_constantes_{periodo}.csv"
     
     try:
-        response = requests.get(url)
+        # AGREGAR ESTAS 4 LÍNEAS NUEVAS:
+        headers = {}
+        if 'GITHUB_TOKEN' in st.secrets:
+            headers = {"Authorization": f"token {st.secrets['GITHUB_TOKEN']}"}
+        
+        response = requests.get(url, headers=headers)  # ← AGREGAR headers aquí
         response.raise_for_status()
         df = pd.read_csv(StringIO(response.text))
         return df, periodo
