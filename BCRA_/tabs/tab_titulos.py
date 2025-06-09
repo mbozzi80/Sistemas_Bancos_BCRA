@@ -1,5 +1,7 @@
 import streamlit as st
 import pandas as pd
+from ..graficos.utils import formatear_numero, calcular_ranking, filtrar_datos_por_periodo
+
 
 def render(df_procesado):
     """

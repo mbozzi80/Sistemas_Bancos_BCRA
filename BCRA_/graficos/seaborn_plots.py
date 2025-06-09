@@ -24,11 +24,17 @@ def grafico_barras_top_bancos(ranking_bancos):
     
     # Crear gráfico de barras horizontal con los valores originales
     df_plot = ranking_bancos.head(10).copy()
+    
+    # ORDENAR POR VOLUMEN DE NEGOCIO (menor a mayor para que aparezca bien con invert_yaxis)
+    df_plot = df_plot.sort_values('Volumen de Negocio', ascending=True)
+    
     sns.barplot(
         data=df_plot,
         x='Volumen de Negocio',
         y='Nombre_Banco',
+        hue='Nombre_Banco',  # ← Agregar esta línea
         palette='viridis',
+        legend=False,        # ← Agregar esta línea
         ax=ax
     )
     

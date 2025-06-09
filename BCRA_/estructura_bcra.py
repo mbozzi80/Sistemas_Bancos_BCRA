@@ -25,7 +25,7 @@ dic = {
     # Préstamos Sector Privado No Financiero (SPNF)
     'Prestamos personales ARS': ([131731, 131749]), 
     'Prestamos hipotecarios ARS + UVA': ([131708, 131711,131745,131746,131809,131810,131816,131817,131866,131867]),
-    'Tarjetas de Crédito ARS': ([131742]), 'Documentos descontados ARS': ([131718, 131791]),
+    'Tarjetas de Crédito ARS': ([131742]), 'Documentos descontados ARS': ([131718, 131721,131791]),
     'Prefinancacion de Expor USD': ([135799]), 'Doc a sola firma ARS':([131718,136121]), 'Adelantos ARS':([131709,131712,135709]),
     'Doc a sola firma USD':([135715]), 'Tarjetas de Crédito USD': ([135742]),
     
