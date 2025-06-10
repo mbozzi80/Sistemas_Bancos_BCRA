@@ -2,6 +2,7 @@ import pandas as pd
 from io import StringIO
 import requests
 from .estructura_bcra import dic, cl, columnas
+from .graficos.utils import formatear_numero
 
 def cargar_denominaciones():
     """
@@ -229,7 +230,7 @@ def obtener_resumen_datos(df):
     top_bancos = df[df['Periodo'] == ultimo_periodo].nlargest(5, 'Activo')[['Entidad', 'Activo']]
     
     for _, banco in top_bancos.iterrows():
-        resumen += f"\n    Banco {banco['Entidad']}: ${banco['Activo']:,.0f}"
+        resumen += f"\n    Banco {banco['Entidad']}: {formatear_numero(banco['Activo'])}"
     
     return resumen
 
@@ -256,7 +257,7 @@ def obtener_resumen_datos_con_nombres(df):
     
     for _, banco in top_bancos.iterrows():
         nombre = banco['Nombre_Banco'] if pd.notna(banco['Nombre_Banco']) else f"Banco {banco['Entidad']}"
-        resumen += f"\n    {nombre}: ${banco['Volumen de Negocio']:,.0f}"
+        resumen += f"\n    {nombre}: {formatear_numero(banco['Volumen de Negocio'])}"
     
     return resumen
 

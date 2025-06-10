@@ -16,21 +16,33 @@ st.set_page_config(
 if 'active_tab' not in st.session_state:
     st.session_state.active_tab = 0  # 0 = primer tab por defecto
 
-# Agregar al inicio de app_final.py o en cada tab
+# REEMPLAZAR el st.markdown actual por este CSS más específico:
 st.markdown("""
 <style>
-/* Alinear números a la derecha en todas las tablas */
+/* Alinear números a la derecha - MÁS ESPECÍFICO */
+div[data-testid="stDataFrame"] table td:not(:first-child),
+.stDataFrame table td:not(:first-child),
 .dataframe td:not(:first-child) {
     text-align: right !important;
+    font-family: monospace !important;
 }
 
-/* Mantener primera columna (nombres) alineada a la izquierda */
+/* Primera columna (nombres) a la izquierda */
+div[data-testid="stDataFrame"] table td:first-child,
+.stDataFrame table td:first-child,
 .dataframe td:first-child {
     text-align: left !important;
 }
 
-/* También para headers numéricos */
+/* Headers alineados */
+div[data-testid="stDataFrame"] table th:not(:first-child),
+.stDataFrame table th:not(:first-child),
 .dataframe th:not(:first-child) {
+    text-align: right !important;
+}
+
+/* Para st.metric también */
+div[data-testid="metric-container"] > div > div:nth-child(2) {
     text-align: right !important;
 }
 </style>
