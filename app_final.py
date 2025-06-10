@@ -5,6 +5,13 @@ import re
 from io import StringIO
 from BCRA_.tabs import tab_resumen, tab_prestamos, tab_titulos, tab_depositos, tab_ratios, tab_descarga
 
+# Configuración de la página
+st.set_page_config(
+    page_title="Sistema Bancario Argentino",
+    page_icon="🏦",
+    layout="wide"
+)
+
 # INICIALIZAR SESSION STATE PARA RECORDAR TAB ACTIVO
 if 'active_tab' not in st.session_state:
     st.session_state.active_tab = 0  # 0 = primer tab por defecto
@@ -85,12 +92,7 @@ def load_constant_data():
         st.error(f"Error al cargar datos en moneda constante: {e}")
         return None, None
 
-# Configuración de la página
-st.set_page_config(
-    page_title="Sistema Bancario Argentino - BCRA",
-    page_icon="🏦",
-    layout="wide"
-)
+
 
 # Título principal
 st.title("🏦 Sistema Bancario Argentino - BCRA")
