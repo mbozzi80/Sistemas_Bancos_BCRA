@@ -9,6 +9,26 @@ from BCRA_.tabs import tab_resumen, tab_prestamos, tab_titulos, tab_depositos, t
 if 'active_tab' not in st.session_state:
     st.session_state.active_tab = 0  # 0 = primer tab por defecto
 
+# Agregar al inicio de app_final.py o en cada tab
+st.markdown("""
+<style>
+/* Alinear números a la derecha en todas las tablas */
+.dataframe td:not(:first-child) {
+    text-align: right !important;
+}
+
+/* Mantener primera columna (nombres) alineada a la izquierda */
+.dataframe td:first-child {
+    text-align: left !important;
+}
+
+/* También para headers numéricos */
+.dataframe th:not(:first-child) {
+    text-align: right !important;
+}
+</style>
+""", unsafe_allow_html=True)
+
 @st.cache_data
 def get_periodo_from_filename():
     """Extrae el período del nombre del archivo CSV de moneda constante"""

@@ -121,9 +121,8 @@ def procesar_datos_bcra(texto_crudo):
                     fila[concepto] = 0
             
              # Agregar conceptos especiales que no están en dic pero sí en columnas
-            fila['Prestamos totales'] = fila.get('Prestamos', 0)
-            fila['Letras y Notas BCRA'] = 0  # Por ahora en 0, se puede calcular después
             fila['Previsiones'] = calcular_concepto(grupo, 'Prevision', dic['Prevision'], True)
+            fila['Prestamos totales'] = fila.get('Prestamos', 0) - fila.get('Previsiones', 0)
             
             # NUEVO: Calcular Volumen de Negocio con cuentas específicas
             # Depósitos específicos para Volumen de Negocio

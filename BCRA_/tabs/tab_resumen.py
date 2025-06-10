@@ -2,6 +2,8 @@ import streamlit as st
 import pandas as pd
 from ..tools import obtener_resumen_datos_con_nombres
 from ..graficos.seaborn_plots import grafico_evolucion_volumen_negocio, grafico_barras_top_bancos
+from ..graficos.utils import formatear_numero  # ← AGREGAR ESTA LÍNEA
+
 
 def render(df_procesado):
     """
@@ -32,11 +34,11 @@ def render(df_procesado):
     ranking_display['Ranking'] = range(1, len(ranking_display) + 1)
     
     # Formatear números como moneda - TRANSFORMAR DIRECTAMENTE LAS COLUMNAS ORIGINALES
-    ranking_display['Volumen de Negocio'] = ranking_display['Volumen de Negocio'].apply(lambda x: f"${x:,.0f}")
-    ranking_display['Activo'] = ranking_display['Activo'].apply(lambda x: f"${x:,.0f}")
-    ranking_display['Depositos'] = ranking_display['Depositos'].apply(lambda x: f"${x:,.0f}")
-    ranking_display['Prestamos'] = ranking_display['Prestamos'].apply(lambda x: f"${x:,.0f}")
-    ranking_display['PN FINAL'] = ranking_display['PN FINAL'].apply(lambda x: f"${x:,.0f}")
+    ranking_display['Volumen de Negocio'] = ranking_display['Volumen de Negocio'].apply(formatear_numero)
+    ranking_display['Activo'] = ranking_display['Activo'].apply(formatear_numero)
+    ranking_display['Depositos'] = ranking_display['Depositos'].apply(formatear_numero)
+    ranking_display['Prestamos'] = ranking_display['Prestamos'].apply(formatear_numero)
+    ranking_display['PN FINAL'] = ranking_display['PN FINAL'].apply(formatear_numero)
     
     # Crear DataFrame para mostrar - USAR LAS COLUMNAS ORIGINALES
     tabla_ranking = ranking_display[['Ranking', 'Nombre_Banco', 'Volumen de Negocio', 'Activo', 'Depositos', 'Prestamos', 'PN FINAL']].copy()
@@ -53,16 +55,16 @@ def render(df_procesado):
         st.metric("📊 Total Bancos", f"{len(ranking_bancos)}")
     with col2:
         volumen_total = ranking_bancos['Volumen de Negocio'].sum()  # USAR VALORES ORIGINALES SIN FORMATO
-        st.metric("💼 Volumen Total", f"${volumen_total:,.0f}")
+        st.metric("💼 Volumen Total", formatear_numero(volumen_total))
     with col3:
         activo_total = ranking_bancos['Activo'].sum()  # USAR VALORES ORIGINALES
-        st.metric("💰 Activo Total Sistema", f"${activo_total:,.0f}")
+        st.metric("💰 Activo Total Sistema", formatear_numero(activo_total))
     with col4:
         depositos_total = ranking_bancos['Depositos'].sum()  # USAR VALORES ORIGINALES
-        st.metric("💳 Depósitos Totales", f"${depositos_total:,.0f}")
+        st.metric("💳 Depósitos Totales", formatear_numero(depositos_total))
     with col5:
         prestamos_total = ranking_bancos['Prestamos'].sum()
-        st.metric("💵 Préstamos Totales", f"${prestamos_total:,.0f}")
+        st.metric("💵 Préstamos Totales", formatear_numero(prestamos_total))
     
     # ========== SECCIÓN DE GRÁFICOS ==========
     st.markdown("---")

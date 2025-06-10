@@ -16,7 +16,7 @@ def mostrar_grafico_streamlit(fig, titulo=""):
     st.pyplot(fig)
     plt.close(fig)  # Liberar memoria
 
-# AGREGAR ESTAS FUNCIONES NUEVAS:
+# En BCRA_/graficos/utils.py - debería estar así:
 def formatear_numero(numero):
     """Formatea números con separadores de miles"""
     if pd.isna(numero) or numero == 0:
@@ -26,7 +26,7 @@ def formatear_numero(numero):
     if isinstance(numero, float) and numero.is_integer():
         numero = int(numero)
     
-    # Formatear con separadores de miles
+    # Formatear con puntos como separadores (SIN símbolo $)
     return f"{numero:,}".replace(",", ".")
 
 def calcular_ranking(df, columna, top_n=15):

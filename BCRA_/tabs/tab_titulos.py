@@ -3,6 +3,8 @@ import pandas as pd
 from ..graficos.utils import formatear_numero, calcular_ranking, filtrar_datos_por_periodo
 
 
+
+
 def render(df_procesado):
     """
     Renderiza el tab de Análisis de Títulos
@@ -41,7 +43,7 @@ def render(df_procesado):
         
         # Formatear números - TRANSFORMAR DIRECTAMENTE LAS COLUMNAS ORIGINALES
         for col in cols_existentes:
-            df_titulos[col] = df_titulos[col].apply(lambda x: f"${x:,.0f}")
+            df_titulos[col] = df_titulos[col].apply(lambda x: formatear_numero(x) if pd.notna(x) else "0")
         
         st.dataframe(df_titulos, use_container_width=True)
         
