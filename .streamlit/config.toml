@@ -1,0 +1,18 @@
+[server]
+port = 8501
+enableCORS = false
+maxUploadSize = 200
+
+[browser]
+gatherUsageStats = false
+serverAddress = "localhost"
+
+[theme]
+primaryColor = "#334155"           # Gris azulado muy sobrio
+backgroundColor = "#ffffff"        # Blanco puro
+secondaryBackgroundColor = "#f1f5f9"  # Gris perla
+textColor = "#0f172a"             # Negro azulado
+font = "sans serif"
+
+[client]
+showErrorDetails = true
