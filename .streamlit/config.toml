@@ -8,11 +8,11 @@ gatherUsageStats = false
 serverAddress = "localhost"
 
 [theme]
-primaryColor = "#334155"           # Gris azulado muy sobrio
-backgroundColor = "#ffffff"        # Blanco puro
-secondaryBackgroundColor = "#f1f5f9"  # Gris perla
-textColor = "#0f172a"             # Negro azulado
-font = "sans serif"
+primaryColor = "#1e3a8a"           # Azul marino profundo (muy elegante)
+backgroundColor = "#f8fafc"        # Gris hielo muy claro
+secondaryBackgroundColor = "#e2e8f0"  # Gris Francia claro para sidebars
+textColor = "#1e293b"             # Gris antracita (muy profesional)
+font = "sans serif"               # Fuente limpia
 
 [client]
 showErrorDetails = true
