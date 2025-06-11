@@ -33,17 +33,15 @@ def render(df_procesado):
     ranking_display = ranking_bancos[['Entidad', 'Nombre_Banco', 'Volumen de Negocio', 'Activo', 'Depositos', 'Prestamos', 'PN FINAL']].copy()
     ranking_display['Ranking'] = range(1, len(ranking_display) + 1)
     
-    # Formatear números como moneda - TRANSFORMAR DIRECTAMENTE LAS COLUMNAS ORIGINALES
-    ranking_display['Volumen de Negocio'] = ranking_display['Volumen de Negocio'].apply(formatear_numero)
-    ranking_display['Activo'] = ranking_display['Activo'].apply(formatear_numero)
-    ranking_display['Depositos'] = ranking_display['Depositos'].apply(formatear_numero)
-    ranking_display['Prestamos'] = ranking_display['Prestamos'].apply(formatear_numero)
-    ranking_display['PN FINAL'] = ranking_display['PN FINAL'].apply(formatear_numero)
-    
-    # Crear DataFrame para mostrar - USAR LAS COLUMNAS ORIGINALES
+    # Crear DataFrame para mostrar - SIN FORMATEAR AÚN
     tabla_ranking = ranking_display[['Ranking', 'Nombre_Banco', 'Volumen de Negocio', 'Activo', 'Depositos', 'Prestamos', 'PN FINAL']].copy()
     tabla_ranking.columns = ['🏆 Posición', '🏦 Banco', '💼 Volumen de Negocio', '💰 Activo Total', '💳 Depósitos', '💵 Préstamos', '📈 Patrimonio Neto']
-    
+
+    # FORMATEAR DESPUÉS DEL RENAME
+    columnas_numericas = ['💼 Volumen de Negocio', '💰 Activo Total', '💳 Depósitos', '💵 Préstamos', '📈 Patrimonio Neto']
+    for col in columnas_numericas:
+        tabla_ranking[col] = tabla_ranking[col].apply(lambda x: formatear_numero(x) if pd.notna(x) else "0")
+
     # Mostrar la tabla
     st.dataframe(tabla_ranking, use_container_width=True, hide_index=True)
     
