@@ -11,7 +11,7 @@ dic = {
     "Disponibilidades USD": (115000,116999), "Caja USD": (115001,115009), "BCRA USD": (115015,115019),
     "Titulos públicos y privados":(120000,126999),
     "Titulos públicos y privados ARS":(121000,124999),"Titulos públicos y privados USD":(125000,126999),
-    'Tit pub a Costo + TIR': ([121016]), 'Tit pub a VR': ([121003]),
+    'Tit pub a Costo + TIR': ([121016,125016,126009]), 'Tit pub a VR': ([121003,125003,126003]),
     "Instrumtos BCRA": ([121056, 121057,121058, 121024,121026,121041,121091,121092,121093, 141143, 141144, 141176,141153]),  # Letras y Notas del BCRA 
         
     "Prestamos": (130000,139999), # son prestamos netos de previsiones

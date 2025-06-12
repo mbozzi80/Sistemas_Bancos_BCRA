@@ -107,8 +107,8 @@ def load_constant_data():
 
 
 # Título principal
-st.title("🏦 Sistema Bancario Argentino - BCRA")
-st.markdown("**La primera plataforma web de análisis bancario argentino con 20 años de datos**")
+st.title("🏦 Sistema Bancario Argentino")
+st.markdown("**La plataforma web de análisis bancario argentino con 20 años de datos**")
 
 # SELECTOR DE TIPO DE DATOS
 st.sidebar.header("⚙️ Configuración de Datos")

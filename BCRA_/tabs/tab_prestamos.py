@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 from ..graficos.utils import formatear_numero, calcular_ranking, filtrar_datos_por_periodo
+from ..graficos.seaborn_plots import grafico_treemap_prestamos
 
 def render(df):
     """Renderiza el tab de análisis de préstamos"""
@@ -90,6 +91,9 @@ def render(df):
     with tab1:
         st.markdown("#### 🏆 Top Bancos por Préstamos Totales")
         
+        # Llamar al gráfico de treemap
+        grafico_treemap_prestamos(df_periodo)
+            
         # Tabla con formato
         df_display = ranking_prestamos[columnas_existentes].copy()
         

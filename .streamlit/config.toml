@@ -1,6 +1,6 @@
 [server]
 port = 8501
-enableCORS = false
+enableCORS = true              # CAMBIAR A true
 maxUploadSize = 200
 
 [browser]

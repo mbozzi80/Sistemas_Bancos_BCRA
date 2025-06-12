@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 from ..graficos.utils import formatear_numero, calcular_ranking, filtrar_datos_por_periodo
+from ..graficos.seaborn_plots import grafico_treemap_depositos
 
 def render(df):
     """Renderiza el tab de análisis de depósitos"""
@@ -94,6 +95,9 @@ def render(df):
     with tab1:
         st.markdown("#### 🏆 Top Bancos por Depósitos Totales")
         
+        # Llamar al gráfico de treemap
+        grafico_treemap_depositos(df_periodo)
+
         # Tabla con formato
         df_display = ranking_depositos[columnas_existentes].copy()
         
