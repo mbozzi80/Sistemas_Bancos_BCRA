@@ -5,6 +5,7 @@ import re
 from io import StringIO
 from BCRA_.tabs import tab_resumen, tab_prestamos, tab_titulos, tab_depositos, tab_ratios, tab_descarga
 
+
 # Configuración de la página
 st.set_page_config(
     page_title="Sistema Bancario Argentino",
@@ -142,6 +143,7 @@ elif tipo_datos == "Moneda Constante":
     st.sidebar.info("💰 Cargando datos en moneda constante...")
     with st.spinner("Cargando datos en moneda constante..."):
         df, periodo_base = load_constant_data()
+
 
 # Mostrar información de los datos cargados
 if df is not None:

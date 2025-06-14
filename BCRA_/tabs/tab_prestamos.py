@@ -6,7 +6,7 @@ from ..graficos.seaborn_plots import grafico_treemap_prestamos
 def render(df):
     """Renderiza el tab de análisis de préstamos"""
     
-    st.markdown("### 💰 Análisis de Préstamos")
+    # st.markdown("### Análisis de Préstamos")
     
     # Filtros
     col1, col2 = st.columns(2)
