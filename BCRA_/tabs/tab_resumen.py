@@ -13,7 +13,7 @@ from ..graficos.seaborn_plots import (
     grafico_treemap_volumen_negocio_total
 )
 from ..graficos.utils import formatear_numero  # ← AGREGAR ESTA LÍNEA
-from BCRA_.graficos.utils import obtener_siglas_para_bancos, obtener_sigla_banco
+from ..graficos.utils import obtener_siglas_para_bancos, obtener_sigla_banco
 
 def render(df_procesado):
     """

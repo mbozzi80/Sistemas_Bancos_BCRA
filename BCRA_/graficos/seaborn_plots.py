@@ -301,19 +301,19 @@ def grafico_treemap_instrumentos_bcra(ranking_bancos):
 
     try:
         # Preparar datos para el treemap
-        df_treemap = ranking_bancos[['Nombre_Banco', 'Instrumtos BCRA']].copy()
+        df_treemap = ranking_bancos[['Nombre_Banco', 'Instrumentos BCRA']].copy()
         df_treemap = df_treemap.dropna()
-        df_treemap = df_treemap[df_treemap['Instrumtos BCRA'] > 0]
+        df_treemap = df_treemap[df_treemap['Instrumentos BCRA'] > 0]
 
         # Crear una columna nueva con las siglas
         df_treemap['Sigla_Banco'] = df_treemap['Nombre_Banco'].apply(obtener_sigla_banco)
 
         # Ordenar por Instrumentos BCRA (descendente)
-        df_treemap = df_treemap.sort_values('Instrumtos BCRA', ascending=False)
+        df_treemap = df_treemap.sort_values('Instrumentos BCRA', ascending=False)
 
         # Calcular porcentajes sobre el total de Instrumentos BCRA
-        total_instrumentos = df_treemap['Instrumtos BCRA'].sum()
-        df_treemap['Porcentaje'] = (df_treemap['Instrumtos BCRA'] / total_instrumentos * 100).round(1)
+        total_instrumentos = df_treemap['Instrumentos BCRA'].sum()
+        df_treemap['Porcentaje'] = (df_treemap['Instrumentos BCRA'] / total_instrumentos * 100).round(1)
 
         # Obtener colores para los bancos
         colores_bancos = obtener_colores_para_bancos(df_treemap['Nombre_Banco'].tolist())
@@ -322,7 +322,7 @@ def grafico_treemap_instrumentos_bcra(ranking_bancos):
         fig = px.treemap(
             df_treemap,
             path=['Sigla_Banco'],  # Usar siglas en lugar de nombres completos
-            values='Instrumtos BCRA',
+            values='Instrumentos BCRA',
             title='🏦 Participación de Mercado - Sistema Bancario Argentino<br>(Por Instrumentos BCRA)',
             color='Nombre_Banco',   # Mantener nombre completo para los colores
             color_discrete_map=colores_bancos  # Usar el mapa de colores personalizado
@@ -468,5 +468,115 @@ def grafico_interactivo_top_bancos_rango(df_procesado, periodo_inicio, periodo_f
     )
 
     return fig
+
+
+
+
+def grafico_interactivo_titulos_rango(df_procesado, periodo_inicio, periodo_fin, bancos_seleccionados=None):
+    """
+    Crea un gráfico interactivo con Plotly mostrando la evolución de títulos públicos y privados
+    de los bancos seleccionados entre los períodos seleccionados.
+
+    Parámetros:
+    - df_procesado: DataFrame con los datos procesados
+    - periodo_inicio: Período inicial del rango (formato YYYYMM)
+    - periodo_fin: Período final del rango (formato YYYYMM)
+    - bancos_seleccionados: Lista de bancos a incluir (si es None, se usan los top 10)
+    """
+    # Ordenar los períodos disponibles
+    periodos_disponibles = sorted(df_procesado['Periodo'].unique())
+
+    # Verificar que los períodos estén en la lista
+    if periodo_inicio not in periodos_disponibles:
+        raise ValueError(f"El período inicial '{periodo_inicio}' no se encuentra en la lista de períodos disponibles.")
+    if periodo_fin not in periodos_disponibles:
+        raise ValueError(f"El período final '{periodo_fin}' no se encuentra en la lista de períodos disponibles.")
+
+    # Determinar los índices de los períodos
+    periodo_inicio_idx = periodos_disponibles.index(periodo_inicio)
+    periodo_fin_idx = periodos_disponibles.index(periodo_fin) + 1  # +1 para incluir el final
+
+    # Seleccionar los períodos entre inicio y fin
+    periodos_seleccionados = periodos_disponibles[periodo_inicio_idx:periodo_fin_idx]
+
+    # Filtrar los datos según los períodos seleccionados
+    df_ventana = df_procesado[df_procesado['Periodo'].isin(periodos_seleccionados)]
+
+    # Verificar que hay datos válidos
+    if df_ventana.empty:
+        raise ValueError("No hay datos disponibles para los períodos seleccionados.")
+
+    # Si no se especificaron bancos, obtener los top 10 según el último período
+    if bancos_seleccionados is None or len(bancos_seleccionados) == 0:
+        ultimo_periodo = periodos_seleccionados[-1]
+        top_bancos_df = df_ventana[df_ventana['Periodo'] == ultimo_periodo].nlargest(10, 'Titulos públicos y privados')
+        bancos_seleccionados = top_bancos_df['Nombre_Banco'].tolist()
+
+    # Filtrar los datos para incluir solo los bancos seleccionados
+    df_ventana = df_ventana[df_ventana['Nombre_Banco'].isin(bancos_seleccionados)]
+    
+    # Crear columna de siglas para la leyenda usando la función centralizada
+    df_ventana['Sigla_Banco'] = df_ventana['Nombre_Banco'].apply(obtener_sigla_banco)
+    
+    # Convertir 'Periodo' a texto en formato legible (YYYY-MM)
+    df_ventana['Periodo'] = df_ventana['Periodo'].astype(str).str.slice(0, 4) + "-" + df_ventana['Periodo'].astype(str).str.slice(4, 6)
+
+    # Escalar los valores de Títulos (a millones)
+    df_ventana['Titulos públicos y privados'] = df_ventana['Titulos públicos y privados'] / 1e6
+
+    # Formatear períodos para el título
+    inicio_display = periodo_inicio[:4] + "-" + periodo_inicio[4:]
+    fin_display = periodo_fin[:4] + "-" + periodo_fin[4:]
+
+    # Obtener el mapa de colores para los bancos seleccionados
+    colores_bancos = obtener_colores_para_bancos(bancos_seleccionados)
+    
+    # Crear el mapa de colores para las siglas
+    color_map = {df_ventana.loc[df_ventana['Nombre_Banco'] == nombre, 'Sigla_Banco'].iloc[0]: colores_bancos[nombre] 
+                for nombre in bancos_seleccionados if not df_ventana[df_ventana['Nombre_Banco'] == nombre].empty}
+
+    # Crear el gráfico interactivo con Plotly usando las siglas para la leyenda
+    fig = px.line(
+        df_ventana,
+        x='Periodo',
+        y='Titulos públicos y privados',
+        color='Sigla_Banco',  # Usar la columna de siglas
+        title=f'Evolución de Títulos Públicos y Privados - Bancos Seleccionados ({inicio_display} a {fin_display})',
+        labels={"Titulos públicos y privados": "Títulos (Millones de $)", "Periodo": "Período", "Sigla_Banco": "Banco"},
+        height=600,
+        color_discrete_map=color_map  # Usar el mapa de colores personalizado
+    )
+
+    # Forzar el eje X a tratar los valores como texto
+    fig.update_xaxes(type='category')
+
+    # Personalizar el diseño del gráfico
+    fig.update_layout(
+        xaxis_title="Período",
+        yaxis_title="Títulos Públicos y Privados (Millones de $)",
+        font=dict(family="Arial", size=12),
+        hovermode="x unified",
+        # Cambiar la posición de la leyenda para que aparezca abajo
+        legend=dict(
+            orientation="h",        # Orientación horizontal
+            yanchor="top",          # Anclaje vertical arriba
+            y=-0.25,                # Posición en Y (negativo para que esté debajo del gráfico)
+            xanchor="center",       # Anclaje horizontal centrado
+            x=0.5,                  # Centrado en X
+            title=None,             # Eliminar título de la leyenda
+            font=dict(size=10)      # Tamaño de fuente
+        ),
+        # Aumentar el margen inferior para dejar espacio a la leyenda
+        margin=dict(l=50, r=50, t=80, b=150)
+    )
+
+    return fig
+
+
+
+
+
+
+
 
 

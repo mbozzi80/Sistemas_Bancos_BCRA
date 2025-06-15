@@ -11,9 +11,12 @@ dic = {
     "Disponibilidades USD": (115000,116999), "Caja USD": (115001,115009), "BCRA USD": (115015,115019),
     "Titulos públicos y privados":(120000,126999),
     "Titulos públicos y privados ARS":(121000,124999),"Titulos públicos y privados USD":(125000,126999),
-    'Tit pub a Costo + TIR': ([121016,125016,126009]), 'Tit pub a VR': ([121003,125003,126003]),
-    "Instrumtos BCRA": ([121056, 121057,121058, 121024,121026,121041,121091,121092,121093, 141143, 141144, 141176,141153]),  # Letras y Notas del BCRA 
-        
+    'Tit pub a Costo + TIR': ([121016,125016,126009]), 'Tit pub a VR': ([121003,121040, 125003, 125042, 126003]),
+    
+    "Letras BCRA": ([121056, 121057,121058, 121024,121026,121041,121091,121092,121093,125043,125044]),  # Letras y Notas del BCRA 
+    "Otros Instrumentos BCRA": ([141143, 141144, 141176,141153]),  # Letras y Notas del BCRA     
+    "Instrumentos BCRA": ([121056, 121057,121058, 121024,121026,121041,121091,121092,121093,141143, 141144, 141176,141153]),
+    
     "Prestamos": (130000,139999), # son prestamos netos de previsiones
     "Prestamos ARS": (131000,132999), "Prestamos USD": (135000,136999),
     "Prestamos SP ARS": (131100,131399), "Prestamos SP USD": (135100,135399),
@@ -82,7 +85,7 @@ cl = {
     
     # TÍTULOS (todos positivos)
     "Titulos públicos y privados": True, "Titulos públicos y privados ARS": True, "Titulos públicos y privados USD": True,
-    "Tit pub a Costo + TIR": True, "Tit pub a VR": True, "Instrumtos BCRA": True,
+    "Tit pub a Costo + TIR": True, "Tit pub a VR": True, "Letras BCRA":True, "Otros Instrumentos BCRA": True, "Instrumentos BCRA": True,
     
     # PRÉSTAMOS (todos positivos)
     "Prestamos": True, "Prestamos ARS": True, "Prestamos USD": True,
@@ -147,7 +150,7 @@ columnas = [
     
     ## TÍTULOS
     "Titulos públicos y privados", "Titulos públicos y privados ARS", "Titulos públicos y privados USD",
-    "Tit pub a Costo + TIR", "Tit pub a VR", "Instrumtos BCRA",
+    "Tit pub a Costo + TIR", "Tit pub a VR", "Letras BCRA", "Otros Instrumentos BCRA","Instrumentos BCRA",
     
     ## PRÉSTAMOS GENERALES
     "Prestamos", "Prestamos ARS", "Prestamos USD",
